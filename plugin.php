@@ -1,6 +1,5 @@
 <?php
 class PulponairSemanticImages extends KokenPlugin {
-
 	const PROPERTY_SETTING_PREFIX = 'property_';
 
 	/**
@@ -47,7 +46,12 @@ class PulponairSemanticImages extends KokenPlugin {
 		return $content;
 	}
 
-
+	/**
+	 * Maps the image properties to item property tags. Taking the configuration into account
+	 *
+	 * @param array $image
+	 * @return string
+	 */
 	protected function mapImagePropertiesToItemPropertiesTags($image) {
 		$result = '';
 
@@ -58,16 +62,19 @@ class PulponairSemanticImages extends KokenPlugin {
 
 			if ($value) {
 				$itemProperty = substr($key, strlen(self::PROPERTY_SETTING_PREFIX));
-				echo $itemProperty. '<br>';
-				echo $this->itemPropertyMap[$itemProperty] . '<br>';
+				//echo $this->itemPropertyMap[$itemProperty] . '<br>';
 				if ($path = $this->itemPropertyMap[$itemProperty]) {
 					$content = $this->getArrayElementByPath($image, $path);
+				} else {
+					$content = $this->getArrayElementByPath($image, $value);
 				}
 
-				$result .= $this->createItemPropertyTag($itemProperty, $content);
+				if (!empty($content)) {
+					$result .= $this->createItemPropertyTag($itemProperty, $content);
+				}
 			}
 		}
-
+		//var_dump($result);
 		return $result;
 	}
 

@@ -8,10 +8,27 @@
 		"link": "http://ontheroad.pulponair.de"
 	},
 	"data": {
+		"property_name": {
+			"label": "Name",
+			"type": "select",
+			"info" : "The name for this object. See: http://schema.org/ImageObject",
+			"options": [
+				{ "label": "Do not render", "value": 0 },
+				{ "label": "Use title", "value": "title" },
+				{ "label": "Use filename", "value": "filename" },
+				{ "label": "Use caption", "value": "caption" }
+			]
+		},
 		"property_caption": {
 			"label": "Caption",
-			"type": "boolean",
-			"info" : "The caption for this object. See: http://schema.org/ImageObject"
+			"type": "select",
+			"info" : "The caption for this object. See: http://schema.org/ImageObject",
+			"options": [
+				{ "label": "Do not render", "value": 0 },
+				{ "label": "Use title", "value": "title" },
+				{ "label": "Use filename", "value": "filename" },
+				{ "label": "Use caption", "value": "caption" }
+			]
 		},
 		"property_dateCreated": {
 			"label": "Date created",
