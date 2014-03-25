@@ -9,8 +9,7 @@ class PulponairSemanticImages extends KokenPlugin {
 	 */
 	protected $itemPropertyMap = array(
 		'dateCreated' => 'captured_on/datetime',
-		'datePublished' => 'published_on/datetime',
-		'contentURL' => 'url'
+		'datePublished' => 'published_on/datetime'
 	);
 
 	/**
