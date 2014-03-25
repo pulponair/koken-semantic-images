@@ -33,7 +33,7 @@ class PulponairSemanticImages extends KokenPlugin {
 		$imageCount = preg_match_all($pattern, $content, $matches);
 		if ($imageCount) {
 			$context = array(
-				'profile' => (array)json_decode(Koken::out('profile.to_json'))
+				'profile' => Koken::$profile
 			);
 			$search = array();
 			$replace = array();
