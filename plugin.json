@@ -1,11 +1,34 @@
 {
 	"name": "Semantic Images",
 	"version": "1.0",
-	"description": "Adds semantic information to images. For e.g. search engines",
+	"description": "Adds semantic information to images. For e.g. search engines.",
 	"demo": "http://ontheroad.pulponair.de",
 	"author": {
 		"name": "Nikolas Hagelstein",
 		"link": "http://ontheroad.pulponair.de"
+	},
+	"data": {
+		"property_caption": {
+			"label": "Caption",
+			"type": "boolean",
+			"info" : "The caption for this object. See: http://schema.org/ImageObject"
+		},
+		"property_dateCreated": {
+			"label": "Date created",
+			"type": "boolean",
+			"info" : "The date on which the image was created i.e taken. See: http://schema.org/ImageObject"
+		},
+		"property_datePublished": {
+			"label": "Date published",
+			"type": "boolean",
+			"info" : "The date on which the image was published. See: http://schema.org/ImageObject"
+		},
+		"property_contentURL": {
+			"label": "Content URL",
+			"type": "boolean",
+			"info" : "Actual bytes of the image object, for example the image file."
+		}
+
 	},
 	"koken_version_required": "0.2.0"
 }

@@ -1,8 +1,21 @@
 <?php
 class PulponairSemanticImages extends KokenPlugin {
 
+	const PROPERTY_SETTING_PREFIX = 'property_';
+
 	/**
-	 * Construtor registers filter
+	 * Item property map
+	 *
+	 * @var array
+	 */
+	protected $itemPropertyMap = array(
+		'dateCreated' => 'captured_on/datetime',
+		'datePublished' => 'published_on/datetime',
+		'contentURL' => 'url'
+	);
+
+	/**
+	 * Constructor registers filter
 	 *
 	 */
 	public function __construct() {
@@ -26,16 +39,54 @@ class PulponairSemanticImages extends KokenPlugin {
 				$image = Koken::api('/content/index/' . (int)$matches[1][$i]);
 				$replace[] = $this->wrapByItemScopeTag(
 					$matches[0][$i] .
-					$this->createItemPropertyTag('caption', $image['title'] ? $image['title'] : $image['filename']) .
-					$this->createItemPropertyTag('dateCreated',$image['captured_on']['datetime']) .
-					$this->createItemPropertyTag('dateCreated',$image['published_on']['datetime']) .
-					$this->createItemPropertyTag('contentURL',$image['url']),
+					$this->mapImagePropertiesToItemPropertiesTags($image) ,
 					'ImageObject');
 			}
-
 			$content = str_replace($search, $replace, $content);
 		}
 		return $content;
+	}
+
+
+	protected function mapImagePropertiesToItemPropertiesTags($image) {
+		$result = '';
+
+		foreach($this->data as $key => $value) {
+			if (strpos($key, self::PROPERTY_SETTING_PREFIX) !== 0) {
+				continue;
+			}
+
+			if ($value) {
+				$itemProperty = substr($key, strlen(self::PROPERTY_SETTING_PREFIX));
+				echo $itemProperty. '<br>';
+				echo $this->itemPropertyMap[$itemProperty] . '<br>';
+				if ($path = $this->itemPropertyMap[$itemProperty]) {
+					$content = $this->getArrayElementByPath($image, $path);
+				}
+
+				$result .= $this->createItemPropertyTag($itemProperty, $content);
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Gets an array element by path
+	 *
+	 * @param $source
+	 * @param $path
+	 * @param string $pathDelimiter
+	 * @return mixed
+	 */
+	protected function getArrayElementByPath($source, $path, $pathDelimiter = '/') {
+		$explodedPath = explode($pathDelimiter, $path);
+		$pointer = &$source;
+		foreach ($explodedPath as $segment) {
+			$pointer = &$pointer[$segment];
+		}
+
+		return $pointer;
 	}
 
 	/**
@@ -52,7 +103,7 @@ class PulponairSemanticImages extends KokenPlugin {
 
 	/**
 	 * Wraps given content in an schema.org item scope
-	 * 
+	 *
 	 * @param string $content
 	 * @param sting $itemType
 	 * @param string $tag
