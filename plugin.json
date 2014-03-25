@@ -11,7 +11,7 @@
 		"property_name": {
 			"label": "Name",
 			"type": "select",
-			"info" : "The name for this object. See: http://schema.org/ImageObject",
+			"info" : "The name for this object. If the corresponding image field is empty, the tag won't be rendered. See: http://schema.org/ImageObject",
 			"options": [
 				{ "label": "Do not render", "value": 0 },
 				{ "label": "Use title", "value": "title" },
@@ -22,7 +22,7 @@
 		"property_caption": {
 			"label": "Caption",
 			"type": "select",
-			"info" : "The caption for this object. See: http://schema.org/ImageObject",
+			"info" : "The caption for this object.  If the corresponding image field is empty, the tag won't be rendered. See: http://schema.org/ImageObject",
 			"options": [
 				{ "label": "Do not render", "value": 0 },
 				{ "label": "Use title", "value": "title" },
