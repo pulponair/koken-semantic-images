@@ -1,0 +1,11 @@
+{
+	"name": "Semantic Images",
+	"version": "1.0",
+	"description": "Adds semantic information to images. For e.g. search engines",
+	"demo": "http://ontheroad.pulponair.de",
+	"author": {
+		"name": "Nikolas Hagelstein",
+		"link": "http://ontheroad.pulponair.de"
+	},
+	"koken_version_required": "0.2.0"
+}
