@@ -8,8 +8,9 @@ class PulponairSemanticImages extends KokenPlugin {
 	 * @var array
 	 */
 	protected $itemPropertyMap = array(
-		'dateCreated' => 'captured_on/timestamp',
-		'datePublished' => 'published_on/timestamp'
+		'dateCreated' => 'image/captured_on/timestamp',
+		'datePublished' => 'image/published_on/timestamp',
+		'author' => 'profile/name',
 	);
 
 	/**
@@ -30,14 +31,17 @@ class PulponairSemanticImages extends KokenPlugin {
 		$pattern = '/<img.*data-base=".*\/(.*)\/.*,.*?".+?>/';
 		$imageCount = preg_match_all($pattern, $content, $matches);
 		if ($imageCount) {
+			$context = array(
+				'profile' => (array)json_decode(Koken::out('profile.to_json'))
+			);
 			$search = array();
 			$replace = array();
 			for ($i = 0; $i < $imageCount; $i++) {
 				$search[] = $matches[0][$i];
-				$image = Koken::api('/content/index/' . (int)$matches[1][$i]);
+				$context['image'] = Koken::api('/content/index/' . (int)$matches[1][$i]);
 				$replace[] = $this->wrapByItemScopeTag(
 					$matches[0][$i] .
-					$this->mapImagePropertiesToItemPropertiesTags($image) ,
+					$this->mapContextToItemPropertiesTags($context) ,
 					'ImageObject');
 			}
 			$content = str_replace($search, $replace, $content);
@@ -46,12 +50,12 @@ class PulponairSemanticImages extends KokenPlugin {
 	}
 
 	/**
-	 * Maps the image properties to item property tags. Taking the configuration into account
+	 * Maps the context to item property tags. Taking the configuration into account
 	 *
-	 * @param array $image
+	 * @param array $context
 	 * @return string
 	 */
-	protected function mapImagePropertiesToItemPropertiesTags($image) {
+	protected function mapContextToItemPropertiesTags($context) {
 		$result = '';
 
 		foreach($this->data as $key => $value) {
@@ -63,9 +67,9 @@ class PulponairSemanticImages extends KokenPlugin {
 				$itemProperty = substr($key, strlen(self::PROPERTY_SETTING_PREFIX));
 
 				if ($path = $this->itemPropertyMap[$itemProperty]) {
-					$content = $this->getArrayElementByPath($image, $path);
+					$content = $this->getArrayElementByPath($context, $path);
 				} else {
-					$content = $this->getArrayElementByPath($image, $value);
+					$content = $this->getArrayElementByPath($context, $value);
 				}
 
 				if (strpos($itemProperty,'date') === 0) {
