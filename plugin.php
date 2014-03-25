@@ -88,8 +88,8 @@ class PulponairSemanticImages extends KokenPlugin {
 	/**
 	 * Gets an array element by path
 	 *
-	 * @param $source
-	 * @param $path
+	 * @param array $source
+	 * @param string $path
 	 * @param string $pathDelimiter
 	 * @return mixed
 	 */
