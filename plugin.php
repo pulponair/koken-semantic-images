@@ -1,11 +1,20 @@
 <?php
-class PulonairSemanticImages extends KokenPlugin {
+class PulponairSemanticImages extends KokenPlugin {
 
-
+	/**
+	 * Construtor registers filter
+	 *
+	 */
 	public function __construct() {
 		$this->register_filter('site.output', 'render');
 	}
 
+	/**
+	 * The actual render method. Searches for image tags and appends semantinc tags.
+	 *
+	 * @param string $content
+	 * @return string mixed
+	 */
 	public function render($content) {
 		$pattern = '/<img.*data-base=".*\/(.*)\/.*,.*?".+?>/';
 		$imageCount = preg_match_all($pattern, $content, $matches);
@@ -29,12 +38,26 @@ class PulonairSemanticImages extends KokenPlugin {
 		return $content;
 	}
 
-
+	/**
+	 * Creates an item property tag.
+	 *
+	 * @param string $property
+	 * @param string $content
+	 * @param string $tag
+	 * @return string
+	 */
 	protected function createItemPropertyTag($property, $content, $tag = 'meta') {
 		return '<' . $tag . ' itemprop="' . $property . '" content="' . $content . '" />';
 	}
 
-
+	/**
+	 * Wraps given content in an schema.org item scope
+	 * 
+	 * @param string $content
+	 * @param sting $itemType
+	 * @param string $tag
+	 * @return string
+	 */
 	protected function wrapByItemScopeTag($content, $itemType, $tag = 'span') {
 		return '<' . $tag . ' itemscope itemtype="http://schema.org/' . $itemType . '">' .
 			$content .
