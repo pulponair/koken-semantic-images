@@ -31,10 +31,10 @@
 			]
 		},
 
-		"property_contentURL": {
+		"property_contentUrl": {
 			"label": "Content URL",
 			"type": "select",
-			"info" : "Actual bytes of the image object, for example the image file.",
+			"info" : "Actual bytes of the image object, for example the image file. See: http://schema.org/ImageObject",
 			"options": [
 				{ "label": "Do not render", "value": 0 },
 				{ "label": "Use content url", "value": "url" },
@@ -49,6 +49,17 @@
 			]
 		},
 
+		"property_thumbnailUrl": {
+			"label": "Thumbnail URL",
+			"type": "select",
+			"info" : "A thumbnail image relevant to the image object. See: http://schema.org/ImageObject",
+			"options": [
+				{ "label": "Do not render", "value": 0 },
+				{ "label": "Use tiny preset url", "value": "presets/tiny/url" },
+				{ "label": "Use small preset url", "value": "presets/small/url" },
+				{ "label": "Use medium preset url", "value": "presets/medium/url" }
+			]
+		},
 		"property_dateCreated": {
 			"label": "Render date created",
 			"type": "boolean",

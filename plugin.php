@@ -8,8 +8,8 @@ class PulponairSemanticImages extends KokenPlugin {
 	 * @var array
 	 */
 	protected $itemPropertyMap = array(
-		'dateCreated' => 'captured_on/datetime',
-		'datePublished' => 'published_on/datetime'
+		'dateCreated' => 'captured_on/timestamp',
+		'datePublished' => 'published_on/timestamp'
 	);
 
 	/**
@@ -61,11 +61,15 @@ class PulponairSemanticImages extends KokenPlugin {
 
 			if ($value) {
 				$itemProperty = substr($key, strlen(self::PROPERTY_SETTING_PREFIX));
-				//echo $this->itemPropertyMap[$itemProperty] . '<br>';
+
 				if ($path = $this->itemPropertyMap[$itemProperty]) {
 					$content = $this->getArrayElementByPath($image, $path);
 				} else {
 					$content = $this->getArrayElementByPath($image, $value);
+				}
+
+				if (strpos($itemProperty,'date') === 0) {
+					$content = date('Y-m-d', $content);
 				}
 
 				if (!empty($content)) {
@@ -73,7 +77,6 @@ class PulponairSemanticImages extends KokenPlugin {
 				}
 			}
 		}
-		//var_dump($result);
 		return $result;
 	}
 
