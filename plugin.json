@@ -70,6 +70,11 @@
 				{ "label": "Use medium preset url", "value": "image/presets/medium/url" }
 			]
 		},
+		"property_author": {
+			"label": "Render author",
+			"type": "boolean",
+			"info" : "The author of the image. We use the profile first/lastname. See: http://schema.org/ImageObject"
+		},
 		"property_dateCreated": {
 			"label": "Render date created",
 			"type": "boolean",
@@ -79,11 +84,6 @@
 			"label": "Render date published",
 			"type": "boolean",
 			"info" : "The date on which the image was published. See: http://schema.org/ImageObject"
-		},
-		"property_author": {
-			"label": "Render author",
-			"type": "boolean",
-			"info" : "The author of the image. We use the profile first/lastname. See: http://schema.org/ImageObject"
 		}
 	},
 	"koken_version_required": "0.2.0"
